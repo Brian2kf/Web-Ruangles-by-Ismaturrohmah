@@ -17,29 +17,55 @@ try {
 
     // Validasi kehadiran required fields
     $required_fields = [
-        'nama_camur', 'tgl_lahir_camur', 'jk_camur', 'sekolah_camur', 
-        'id_tingkat', 'alamat_camur', 'nama_orgtua_wali', 'telepon_orgtua_wali', 
-        'email_orgtua_wali', 'id_program'
+        'nama_camur', 'tgl_lahir_camur', 'jk_camur', 'id_tingkat', 
+        'alamat_camur', 'nama_orgtua_wali', 'telepon_orgtua_wali', 
+        'email_orgtua_wali', 'karakteristik_camur', 'id_program'
     ];
 
     foreach ($required_fields as $field) {
-        if (!isset($_POST[$field]) || empty($_POST[$field])) {
+        if (!isset($_POST[$field]) || trim($_POST[$field]) === '') {
             throw new Exception("Field '{$field}' tidak boleh kosong");
         }
     }
 
     // Sanitasi data
-    $nama_camur = mysqli_real_escape_string($koneksi, htmlspecialchars($_POST['nama_camur']));
-    $tgl_lahir_camur = mysqli_real_escape_string($koneksi, $_POST['tgl_lahir_camur']);
+    $nama_camur = mysqli_real_escape_string($koneksi, htmlspecialchars(trim($_POST['nama_camur'])));
+    $tgl_lahir_camur = mysqli_real_escape_string($koneksi, trim($_POST['tgl_lahir_camur']));
     $jk_camur = mysqli_real_escape_string($koneksi, $_POST['jk_camur']);
-    $sekolah_camur = mysqli_real_escape_string($koneksi, htmlspecialchars($_POST['sekolah_camur']));
+    $sekolah_camur = !empty($_POST['sekolah_camur']) ? mysqli_real_escape_string($koneksi, htmlspecialchars(trim($_POST['sekolah_camur']))) : '';
     $id_tingkat = (int)$_POST['id_tingkat'];
-    $alamat_camur = mysqli_real_escape_string($koneksi, htmlspecialchars($_POST['alamat_camur']));
-    $nama_orgtua_wali = mysqli_real_escape_string($koneksi, htmlspecialchars($_POST['nama_orgtua_wali']));
-    $telepon_orgtua_wali = mysqli_real_escape_string($koneksi, htmlspecialchars($_POST['telepon_orgtua_wali']));
-    $email_orgtua_wali = mysqli_real_escape_string($koneksi, htmlspecialchars($_POST['email_orgtua_wali']));
-    $karakteristik_camur = mysqli_real_escape_string($koneksi, htmlspecialchars($_POST['karakteristik_camur'] ?? ''));
+    $alamat_camur = mysqli_real_escape_string($koneksi, htmlspecialchars(trim($_POST['alamat_camur'])));
+    $nama_orgtua_wali = mysqli_real_escape_string($koneksi, htmlspecialchars(trim($_POST['nama_orgtua_wali'])));
+    $telepon_orgtua_wali = mysqli_real_escape_string($koneksi, trim($_POST['telepon_orgtua_wali']));
+    $email_orgtua_wali = mysqli_real_escape_string($koneksi, strtolower(trim($_POST['email_orgtua_wali'])));
+    $karakteristik_camur = mysqli_real_escape_string($koneksi, htmlspecialchars(trim($_POST['karakteristik_camur'])));
     $id_program = (int)$_POST['id_program'];
+
+    // Validasi nama (minimal 3 karakter)
+    if (strlen($nama_camur) < 3) {
+        throw new Exception('Nama lengkap anak minimal 3 karakter');
+    }
+
+    // Validasi nama orang tua (minimal 3 karakter)
+    if (strlen($nama_orgtua_wali) < 3) {
+        throw new Exception('Nama orang tua minimal 3 karakter');
+    }
+
+    // Validasi tanggal lahir
+    $birthDate = DateTime::createFromFormat('Y-m-d', $tgl_lahir_camur);
+    if (!$birthDate) {
+        throw new Exception('Format tanggal lahir tidak valid');
+    }
+    
+    $today = new DateTime();
+    if ($birthDate > $today) {
+        throw new Exception('Tanggal lahir tidak boleh di masa depan');
+    }
+
+    // Validasi jenis kelamin
+    if ($jk_camur !== 'Laki-laki' && $jk_camur !== 'Perempuan') {
+        throw new Exception('Jenis kelamin tidak valid');
+    }
 
     // Validasi email
     if (!filter_var($email_orgtua_wali, FILTER_VALIDATE_EMAIL)) {
@@ -47,11 +73,40 @@ try {
     }
 
     // Validasi nomor telepon (minimal 10 digit)
-    if (!preg_match('/^\d{10,}$/', preg_replace('/[^0-9]/', '', $telepon_orgtua_wali))) {
-        throw new Exception('Nomor telepon harus minimal 10 digit');
+    $phoneDigitsOnly = preg_replace('/[^0-9]/', '', $telepon_orgtua_wali);
+    if (strlen($phoneDigitsOnly) < 10) {
+        throw new Exception('No. telepon harus minimal 10 digit');
     }
 
-    // Insert ke database dengan prepared statement (untuk security)
+    // Validasi id_tingkat
+    if ($id_tingkat <= 0) {
+        throw new Exception('Kelas tidak valid');
+    }
+
+    // Validasi id_program
+    if ($id_program <= 0) {
+        throw new Exception('Program tidak valid');
+    }
+
+    // Check jika email sudah terdaftar
+    $check_email = mysqli_query($koneksi, "SELECT id_pendaftaran FROM tbl_pendaftaran WHERE email_orgtua_wali = '$email_orgtua_wali'");
+    if (mysqli_num_rows($check_email) > 0) {
+        throw new Exception('Email sudah terdaftar. Silakan gunakan email lain atau hubungi admin.');
+    }
+
+    // Check jika tingkat exists
+    $check_tingkat = mysqli_query($koneksi, "SELECT id_tingkat FROM tbl_tingkat_program WHERE id_tingkat = $id_tingkat");
+    if (mysqli_num_rows($check_tingkat) === 0) {
+        throw new Exception('Kelas yang dipilih tidak valid');
+    }
+
+    // Check jika program exists
+    $check_program = mysqli_query($koneksi, "SELECT id_program FROM tbl_tipe_program WHERE id_program = $id_program");
+    if (mysqli_num_rows($check_program) === 0) {
+        throw new Exception('Program yang dipilih tidak valid');
+    }
+
+    // Insert ke database
     $query_insert = "INSERT INTO tbl_pendaftaran 
         (nama_camur, tgl_lahir_camur, jk_camur, sekolah_camur, alamat_camur, 
         nama_orgtua_wali, telepon_orgtua_wali, email_orgtua_wali, karakteristik_camur, 
@@ -62,7 +117,7 @@ try {
         $id_program, $id_tingkat, 'Pending', NOW())";
 
     if (!mysqli_query($koneksi, $query_insert)) {
-        throw new Exception('Database error: ' . mysqli_error($koneksi));
+        throw new Exception('Gagal menyimpan data. Silakan coba lagi. Error: ' . mysqli_error($koneksi));
     }
 
     $id_pendaftaran_baru = mysqli_insert_id($koneksi);
@@ -71,11 +126,11 @@ try {
     $q_prog = mysqli_query($koneksi, "SELECT nama_program FROM tbl_tipe_program WHERE id_program = $id_program");
     
     if (!$q_prog) {
-        throw new Exception('Error querying program: ' . mysqli_error($koneksi));
+        throw new Exception('Gagal mengambil data program');
     }
 
     $d_prog = mysqli_fetch_assoc($q_prog);
-    $program_pilihan = $d_prog['nama_program'] ?? 'Unknown Program';
+    $program_pilihan = $d_prog['nama_program'] ?? 'Program Unknown';
 
     // Prepare response data
     $response['success'] = true;
