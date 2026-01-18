@@ -15,11 +15,11 @@ try {
         throw new Exception('Invalid request method');
     }
 
-    // Validasi kehadiran required fields
+    // Validasi kehadiran REQUIRED fields (tidak termasuk optional fields)
     $required_fields = [
         'nama_camur', 'tgl_lahir_camur', 'jk_camur', 'id_tingkat', 
         'alamat_camur', 'nama_orgtua_wali', 'telepon_orgtua_wali', 
-        'email_orgtua_wali', 'karakteristik_camur', 'id_program'
+        'id_program'
     ];
 
     foreach ($required_fields as $field) {
@@ -28,20 +28,22 @@ try {
         }
     }
 
-    // Sanitasi data
+    // Sanitasi data REQUIRED
     $nama_camur = mysqli_real_escape_string($koneksi, htmlspecialchars(trim($_POST['nama_camur'])));
     $tgl_lahir_camur = mysqli_real_escape_string($koneksi, trim($_POST['tgl_lahir_camur']));
     $jk_camur = mysqli_real_escape_string($koneksi, $_POST['jk_camur']);
-    $sekolah_camur = !empty($_POST['sekolah_camur']) ? mysqli_real_escape_string($koneksi, htmlspecialchars(trim($_POST['sekolah_camur']))) : '';
     $id_tingkat = (int)$_POST['id_tingkat'];
     $alamat_camur = mysqli_real_escape_string($koneksi, htmlspecialchars(trim($_POST['alamat_camur'])));
     $nama_orgtua_wali = mysqli_real_escape_string($koneksi, htmlspecialchars(trim($_POST['nama_orgtua_wali'])));
     $telepon_orgtua_wali = mysqli_real_escape_string($koneksi, trim($_POST['telepon_orgtua_wali']));
-    $email_orgtua_wali = mysqli_real_escape_string($koneksi, strtolower(trim($_POST['email_orgtua_wali'])));
-    $karakteristik_camur = mysqli_real_escape_string($koneksi, htmlspecialchars(trim($_POST['karakteristik_camur'])));
     $id_program = (int)$_POST['id_program'];
 
-    // Validasi nama (minimal 3 karakter)
+    // Sanitasi data OPTIONAL
+    $sekolah_camur = !empty($_POST['sekolah_camur']) ? mysqli_real_escape_string($koneksi, htmlspecialchars(trim($_POST['sekolah_camur']))) : '';
+    $email_orgtua_wali = !empty($_POST['email_orgtua_wali']) ? mysqli_real_escape_string($koneksi, strtolower(trim($_POST['email_orgtua_wali']))) : '';
+    $karakteristik_camur = !empty($_POST['karakteristik_camur']) ? mysqli_real_escape_string($koneksi, htmlspecialchars(trim($_POST['karakteristik_camur']))) : '';
+
+    // Validasi nama anak (minimal 3 karakter)
     if (strlen($nama_camur) < 3) {
         throw new Exception('Nama lengkap anak minimal 3 karakter');
     }
@@ -67,11 +69,6 @@ try {
         throw new Exception('Jenis kelamin tidak valid');
     }
 
-    // Validasi email
-    if (!filter_var($email_orgtua_wali, FILTER_VALIDATE_EMAIL)) {
-        throw new Exception('Format email tidak valid');
-    }
-
     // Validasi nomor telepon (minimal 10 digit)
     $phoneDigitsOnly = preg_replace('/[^0-9]/', '', $telepon_orgtua_wali);
     if (strlen($phoneDigitsOnly) < 10) {
@@ -88,20 +85,36 @@ try {
         throw new Exception('Program tidak valid');
     }
 
-    // Check jika email sudah terdaftar
-    $check_email = mysqli_query($koneksi, "SELECT id_pendaftaran FROM tbl_pendaftaran WHERE email_orgtua_wali = '$email_orgtua_wali'");
-    if (mysqli_num_rows($check_email) > 0) {
-        throw new Exception('Email sudah terdaftar. Silakan gunakan email lain atau hubungi admin.');
+    // Validasi email JIKA diisi (optional)
+    if ($email_orgtua_wali !== '') {
+        if (!filter_var($email_orgtua_wali, FILTER_VALIDATE_EMAIL)) {
+            throw new Exception('Format email tidak valid');
+        }
+
+        // Check jika email sudah terdaftar
+        $check_email = mysqli_query($koneksi, "SELECT id_pendaftaran FROM tbl_pendaftaran WHERE email_orgtua_wali = '$email_orgtua_wali'");
+        if (!$check_email) {
+            throw new Exception('Error checking email: ' . mysqli_error($koneksi));
+        }
+        if (mysqli_num_rows($check_email) > 0) {
+            throw new Exception('Email sudah terdaftar. Silakan gunakan email lain atau hubungi admin.');
+        }
     }
 
     // Check jika tingkat exists
     $check_tingkat = mysqli_query($koneksi, "SELECT id_tingkat FROM tbl_tingkat_program WHERE id_tingkat = $id_tingkat");
+    if (!$check_tingkat) {
+        throw new Exception('Error checking level: ' . mysqli_error($koneksi));
+    }
     if (mysqli_num_rows($check_tingkat) === 0) {
         throw new Exception('Kelas yang dipilih tidak valid');
     }
 
     // Check jika program exists
     $check_program = mysqli_query($koneksi, "SELECT id_program FROM tbl_tipe_program WHERE id_program = $id_program");
+    if (!$check_program) {
+        throw new Exception('Error checking program: ' . mysqli_error($koneksi));
+    }
     if (mysqli_num_rows($check_program) === 0) {
         throw new Exception('Program yang dipilih tidak valid');
     }

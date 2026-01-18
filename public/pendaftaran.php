@@ -51,14 +51,14 @@ require_once 'template/navbar.php';
                                             <div class="col-sm-5 d-flex align-items-center">
                                                 <label class="me-3">Jenis Kelamin Anak <span class="text-danger">*</span>:</label>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" id="jk_laki" name="jk_camur" value="Laki-laki" required>
-                                                    <label class="form-check-label" for="jk_laki">Laki-laki</label>
+                                                    <input class="form-check-input" type="radio" name="jk_camur" id="laki_laki" value="Laki-laki" required>
+                                                    <label class="form-check-label" for="laki_laki">Laki-laki</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" id="jk_perempuan" name="jk_camur" value="Perempuan">
-                                                    <label class="form-check-label" for="jk_perempuan">Perempuan</label>
+                                                    <input class="form-check-input" type="radio" name="jk_camur" id="perempuan" value="Perempuan">
+                                                    <label class="form-check-label" for="perempuan">Perempuan</label>
                                                 </div>
-                                                <small class="text-danger error-text" id="error-jk_camur"></small>
+                                                <small class="text-danger error-text d-block" id="error-jk_camur"></small>
                                             </div>
                                         </div>
 
@@ -66,6 +66,7 @@ require_once 'template/navbar.php';
                                             <label class="col-sm-3 col-form-label">Asal Sekolah</label>
                                             <div class="col-sm-5 mb-2 mb-sm-0">
                                                 <input type="text" class="form-control" id="sekolah_camur" name="sekolah_camur">
+                                                <small class="text-muted">Opsional</small>
                                             </div>
                                             <label class="col-sm-1 col-form-label text-end">Kelas <span class="text-danger">*</span></label>
                                             <div class="col-sm-3">
@@ -97,22 +98,24 @@ require_once 'template/navbar.php';
                                         <div class="mb-3 row">
                                             <label class="col-sm-3 col-form-label">No. Telepon <span class="text-danger">*</span></label>
                                             <div class="col-sm-9">
-                                                <input type="tel" class="form-control" id="telepon_orgtua_wali" name="telepon_orgtua_wali" required placeholder="08xxxxxxxx">
+                                                <input type="text" class="form-control" id="telepon_orgtua_wali" name="telepon_orgtua_wali" placeholder="08xxxxxxxx" required>
                                                 <small class="text-danger error-text" id="error-telepon_orgtua_wali"></small>
                                             </div>
                                         </div>
 
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Email <span class="text-danger">*</span></label>
+                                            <label class="col-sm-3 col-form-label">Email</label>
                                             <div class="col-sm-9">
-                                                <input type="email" class="form-control" id="email_orgtua_wali" name="email_orgtua_wali" required placeholder="email@contoh.com">
+                                                <input type="email" class="form-control" id="email_orgtua_wali" name="email_orgtua_wali" placeholder="email@contoh.com">
+                                                <small class="text-muted">Opsional</small>
                                                 <small class="text-danger error-text" id="error-email_orgtua_wali"></small>
                                             </div>
                                         </div>
 
                                         <div class="mb-3">
-                                            <label class="form-label fw-bold">Penjelasan Karakteristik & Kemampuan Anak <span class="text-danger">*</span></label>
-                                            <textarea class="form-control" id="karakteristik_camur" name="karakteristik_camur" rows="3" placeholder="Contoh: Anak aktif, kurang fokus di matematika..." required></textarea>
+                                            <label class="form-label fw-bold">Penjelasan Karakteristik & Kemampuan Anak</label>
+                                            <textarea class="form-control" id="karakteristik_camur" name="karakteristik_camur" rows="3" placeholder="Contoh: Anak aktif, kurang fokus di matematika..."></textarea>
+                                            <small class="text-muted">Opsional</small>
                                             <small class="text-danger error-text" id="error-karakteristik_camur"></small>
                                         </div>
 
@@ -312,12 +315,12 @@ require_once 'template/navbar.php';
         `;
     }
 
-    // Validasi Step 1
+    // Validasi Step 1 dengan error handling yang lebih baik
     function validateStep1() {
         clearErrors();
         let isValid = true;
 
-        // Validasi nama
+        // Validasi nama anak
         const namaCamur = document.getElementById("nama_camur").value.trim();
         if (namaCamur === "") {
             showFieldError("nama_camur", "Nama lengkap anak harus diisi");
@@ -374,32 +377,23 @@ require_once 'template/navbar.php';
 
         // Validasi telepon
         const teleponOrgtuaWali = document.getElementById("telepon_orgtua_wali").value.trim();
-        const phoneRegex = /^\d{10,}$/;
         const phoneDigitsOnly = teleponOrgtuaWali.replace(/[^0-9]/g, '');
         if (teleponOrgtuaWali === "") {
             showFieldError("telepon_orgtua_wali", "No. telepon harus diisi");
             isValid = false;
-        } else if (!phoneRegex.test(phoneDigitsOnly)) {
+        } else if (phoneDigitsOnly.length < 10) {
             showFieldError("telepon_orgtua_wali", "No. telepon harus minimal 10 digit");
             isValid = false;
         }
 
-        // Validasi email
+        // Validasi email (optional, tapi jika diisi harus valid)
         const emailOrgtuaWali = document.getElementById("email_orgtua_wali").value.trim();
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (emailOrgtuaWali === "") {
-            showFieldError("email_orgtua_wali", "Email harus diisi");
-            isValid = false;
-        } else if (!emailRegex.test(emailOrgtuaWali)) {
-            showFieldError("email_orgtua_wali", "Format email tidak valid");
-            isValid = false;
-        }
-
-        // Validasi karakteristik
-        const karakteristikCamur = document.getElementById("karakteristik_camur").value.trim();
-        if (karakteristikCamur === "") {
-            showFieldError("karakteristik_camur", "Karakteristik anak harus diisi");
-            isValid = false;
+        if (emailOrgtuaWali !== "") {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailOrgtuaWali)) {
+                showFieldError("email_orgtua_wali", "Format email tidak valid");
+                isValid = false;
+            }
         }
 
         if (isValid) {
