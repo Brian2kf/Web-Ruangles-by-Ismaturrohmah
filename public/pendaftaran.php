@@ -25,7 +25,7 @@ require_once 'template/navbar.php';
                 <form action="" method="POST" id="formPendaftaran" novalidate>
                     
                     <div id="step1" class="d-flex justify-content-center align-items-center">
-                        <div class="card col-md-9 mb-4 mt-4 shadow-sm">
+                        <div class="card col-md-11 mb-4 mt-4 shadow-sm">
                             <div class="card-header bg-primary text-white">
                                 <i class="fas fa-user-edit me-1"></i>
                                 A. Informasi Murid dan Orang Tua
@@ -49,7 +49,7 @@ require_once 'template/navbar.php';
                                                 <small class="text-danger error-text" id="error-tgl_lahir_camur"></small>
                                             </div>
                                             <div class="col-sm-5 d-flex align-items-center">
-                                                <label class="me-3">Jenis Kelamin Anak <span class="text-danger">*</span>:</label>
+                                                <label class="me-3">Jenis Kelamin Anak <span class="text-danger">*</span></label>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="jk_camur" id="laki_laki" value="Laki-laki" required>
                                                     <label class="form-check-label" for="laki_laki">Laki-laki</label>
@@ -66,7 +66,6 @@ require_once 'template/navbar.php';
                                             <label class="col-sm-3 col-form-label">Asal Sekolah</label>
                                             <div class="col-sm-5 mb-2 mb-sm-0">
                                                 <input type="text" class="form-control" id="sekolah_camur" name="sekolah_camur">
-                                                <small class="text-muted">Opsional</small>
                                             </div>
                                             <label class="col-sm-1 col-form-label text-end">Kelas <span class="text-danger">*</span></label>
                                             <div class="col-sm-3">
@@ -74,14 +73,6 @@ require_once 'template/navbar.php';
                                                     <option value="">Pilih...</option>
                                                 </select>
                                                 <small class="text-danger error-text" id="error-id_tingkat"></small>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Alamat <span class="text-danger">*</span></label>
-                                            <div class="col-sm-9">
-                                                <textarea class="form-control" id="alamat_camur" name="alamat_camur" rows="2" required></textarea>
-                                                <small class="text-danger error-text" id="error-alamat_camur"></small>
                                             </div>
                                         </div>
 
@@ -96,7 +87,7 @@ require_once 'template/navbar.php';
                                         </div>
 
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">No. Telepon <span class="text-danger">*</span></label>
+                                            <label class="col-sm-3 col-form-label">No. Telepon Orang Tua <span class="text-danger">*</span></label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="telepon_orgtua_wali" name="telepon_orgtua_wali" placeholder="08xxxxxxxx" required>
                                                 <small class="text-danger error-text" id="error-telepon_orgtua_wali"></small>
@@ -104,18 +95,24 @@ require_once 'template/navbar.php';
                                         </div>
 
                                         <div class="mb-3 row">
-                                            <label class="col-sm-3 col-form-label">Email</label>
+                                            <label class="col-sm-3 col-form-label">Email Orang Tua</label>
                                             <div class="col-sm-9">
                                                 <input type="email" class="form-control" id="email_orgtua_wali" name="email_orgtua_wali" placeholder="email@contoh.com">
-                                                <small class="text-muted">Opsional</small>
                                                 <small class="text-danger error-text" id="error-email_orgtua_wali"></small>
                                             </div>
                                         </div>
 
+                                        <div class="mb-3 row">
+                                            <label class="col-sm-3 col-form-label">Alamat <span class="text-danger">*</span></label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control" id="alamat_camur" name="alamat_camur" rows="2" required></textarea>
+                                                <small class="text-danger error-text" id="error-alamat_camur"></small>
+                                            </div>
+                                        </div>                                        
+
                                         <div class="mb-3">
                                             <label class="form-label fw-bold">Penjelasan Karakteristik & Kemampuan Anak</label>
                                             <textarea class="form-control" id="karakteristik_camur" name="karakteristik_camur" rows="3" placeholder="Contoh: Anak aktif, kurang fokus di matematika..."></textarea>
-                                            <small class="text-muted">Opsional</small>
                                             <small class="text-danger error-text" id="error-karakteristik_camur"></small>
                                         </div>
 
