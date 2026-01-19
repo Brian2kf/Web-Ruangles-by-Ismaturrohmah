@@ -27,9 +27,6 @@ $query_terbaru = "SELECT p.*, m.nama_murid, k.nama_kelas_bimbel
                   ORDER BY p.created_at DESC
                   LIMIT 5";
 $result_terbaru = mysqli_query($koneksi, $query_terbaru);
-
-// Ambil daftar murid yang perlu reminder
-$result_reminder = getMuridPerluReminder($koneksi);
 ?>
 
 <div id="layoutSidenav_content">
@@ -97,30 +94,7 @@ $result_reminder = getMuridPerluReminder($koneksi);
                     </div>
                 </div>
 
-            <!-- Reminder Sesi Hampir Habis -->
-            <?php if (mysqli_num_rows($result_reminder) > 0): ?>
-            <div class="row mb-4">
-                <div class="col-12">
-                    <div class="alert alert-warning shadow">
-                        <h5 class="alert-heading"><i class="fas fa-exclamation-triangle"></i> Reminder: Sesi Hampir Habis</h5>
-                        <hr>
-                        <p class="mb-2">Murid berikut memiliki sesi yang hampir habis. Segera hubungi orang tua untuk perpanjangan:</p>
-                        <ul class="mb-0">
-                            <?php while ($reminder = mysqli_fetch_assoc($result_reminder)): ?>
-                            <li>
-                                <strong><?= $reminder['nama_murid'] ?></strong> - 
-                                Invoice: <?= $reminder['no_invoice'] ?> - 
-                                Sisa: <?= $reminder['sesi_tersisa'] ?> sesi</span>
-                                <a href="detail_invoice_admin.php?id=<?= $reminder['id_murid'] ?>" class="btn btn-sm btn-info ms-2 text-white">
-                                    <i class="fas fa-eye"></i> Lihat
-                                </a>
-                            </li>
-                            <?php endwhile; ?>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <?php endif; ?>
+
 
             <!-- Invoice Terbaru -->
             <div class="row">

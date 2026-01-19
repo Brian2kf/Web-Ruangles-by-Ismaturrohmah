@@ -47,7 +47,7 @@ if (isset($_GET['id_absensi']) && is_numeric($_GET['id_absensi']) && isset($_GET
                          LIMIT 1";
         
         if (mysqli_query($koneksi, $query_tambah)) {
-            $pesan_tambahan = "\\n\\n♻️ Sesi " . $data_absen['nama_murid'] . " telah dikembalikan karena absensi 'Hadir' dihapus.";
+            $pesan_tambahan = "\n\n♻️ Sesi " . $data_absen['nama_murid'] . " telah dikembalikan karena absensi 'Hadir' dihapus.";
         }
     }
     
@@ -59,9 +59,10 @@ if (isset($_GET['id_absensi']) && is_numeric($_GET['id_absensi']) && isset($_GET
 
     // 5. Feedback
     if ($result) {
+        $pesan_alert = "Data absensi berhasil dihapus!" . $pesan_tambahan;
         echo "<script>
-                alert('Data absensi berhasil dihapus!" . $pesan_tambahan . "');
-                document.location.href = 'detail-absensi.php?id_kelas=" . $id_kelas . "';
+            alert(" . json_encode($pesan_alert) . ");
+            document.location.href = 'detail-absensi.php?id_kelas=" . $id_kelas . "';
               </script>";
     } else {
         $error_msg = mysqli_error($koneksi);

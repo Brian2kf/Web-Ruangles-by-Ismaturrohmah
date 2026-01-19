@@ -119,28 +119,22 @@ if (isset($_POST['simpan_massal'])) {
             if ($berhasil) {
                 // Commit transaksi
                 mysqli_commit($koneksi);
-                
                 // Susun pesan alert
-                $pesan = "✅ Absensi tanggal " . date('d M Y', strtotime($tgl_absensi)) . " berhasil disimpan!\\n\\n";
-                
-                // Tambahkan info sesi yang dikurangi
+                $pesan = "✅ Absensi tanggal " . date('d M Y', strtotime($tgl_absensi)) . " berhasil disimpan!\n";
                 if (!empty($sesi_dikurangi)) {
-                    $pesan .= "📊 SESI DIKURANGI:\\n";
+                    $pesan .= "📊 SESI DIKURANGI:\n";
                     foreach ($sesi_dikurangi as $info) {
-                        $pesan .= "• $info\\n";
+                        $pesan .= "• $info\n";
                     }
                 }
-                
-                // Tambahkan peringatan jika ada
                 if (!empty($peringatan_sesi)) {
-                    $pesan .= "\\n🔔 PERINGATAN:\\n";
+                    $pesan .= "\n🔔 PERINGATAN:\n";
                     foreach ($peringatan_sesi as $warning) {
-                        $pesan .= "$warning\\n";
+                        $pesan .= "$warning\n";
                     }
                 }
-                
                 echo "<script>
-                        alert('" . addslashes($pesan) . "');
+                        alert(" . json_encode($pesan) . ");
                         document.location.href = 'detail-absensi.php?id_kelas=" . $id_kelas . "';
                       </script>";
             } else {
@@ -189,34 +183,28 @@ else if (isset($_POST['update'])) {
 
     if ($result) {
         $pesan_tambahan = "";
-        
         // ============================================
         // INTEGRASI PEMBAYARAN: HANDLE PERUBAHAN STATUS
         // ============================================
-        
         // CASE 1: Status lama bukan "Hadir", sekarang jadi "Hadir" → Kurangi sesi
         if ($status_lama != 'Hadir' && $status_absensi == 'Hadir') {
             $invoice_aktif = getInvoiceAktif($koneksi, $id_murid, $id_kelas);
-            
             if ($invoice_aktif) {
                 kurangiSesiTersisa($koneksi, $invoice_aktif['id_pembayaran'], $id_absensi, $tgl_absensi);
                 $sisa = $invoice_aktif['sesi_tersisa'] - 1;
-                $pesan_tambahan = "\\n\\n✅ Sesi dikurangi. Sisa: $sisa sesi";
-                
+                $pesan_tambahan = "\n✅ Sesi dikurangi. Sisa: $sisa sesi";
                 if ($sisa <= 2 && $sisa > 0) {
-                    $pesan_tambahan .= "\\n⚠️ Sesi hampir habis!";
+                    $pesan_tambahan .= "\n⚠️ Sesi hampir habis!";
                 }
             } else {
-                $pesan_tambahan = "\\n\\n⚠️ Murid belum punya invoice aktif!";
+                $pesan_tambahan = "\n⚠️ Murid belum punya invoice aktif!";
             }
         }
-        
         // CASE 2: Status lama "Hadir", sekarang jadi bukan "Hadir" → Tambah kembali sesi
         elseif ($status_lama == 'Hadir' && $status_absensi != 'Hadir') {
             // Hapus dari tbl_sesi_terpakai
             $query_hapus_sesi = "DELETE FROM tbl_sesi_terpakai WHERE id_absensi = $id_absensi";
             mysqli_query($koneksi, $query_hapus_sesi);
-            
             // Tambah kembali sesi tersisa
             $query_tambah_sesi = "UPDATE tbl_pembayaran SET 
                                   sesi_terpakai = GREATEST(sesi_terpakai - 1, 0),
@@ -227,14 +215,12 @@ else if (isset($_POST['update'])) {
                                   ORDER BY id_pembayaran ASC
                                   LIMIT 1";
             mysqli_query($koneksi, $query_tambah_sesi);
-            
-            $pesan_tambahan = "\\n\\n♻️ Sesi dikembalikan karena status diubah dari Hadir";
+            $pesan_tambahan = "\n♻️ Sesi dikembalikan karena status diubah dari Hadir";
         }
-        
         // ============================================
-        
+        $pesan_alert = "Data absensi berhasil diperbarui!" . $pesan_tambahan;
         echo "<script>
-                alert('Data absensi berhasil diperbarui!" . $pesan_tambahan . "');
+                alert(" . json_encode($pesan_alert) . ");
                 document.location.href = 'detail-absensi.php?id_kelas=" . $id_kelas . "';
               </script>";
     } else {

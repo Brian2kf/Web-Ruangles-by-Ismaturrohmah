@@ -201,7 +201,6 @@ if (isset($_POST['konfirmasi'])) {
                                         <option value="">-- Pilih Metode --</option>
                                         <option value="Transfer Bank">Transfer Bank</option>
                                         <option value="Tunai">Tunai</option>
-                                        <option value="E-Wallet (DANA)">E-Wallet (DANA)</option>
                                     </select>
                                 </div>
 

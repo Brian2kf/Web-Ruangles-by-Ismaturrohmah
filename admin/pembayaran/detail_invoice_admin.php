@@ -88,7 +88,7 @@ if ($invoice['jumlah_sesi'] > 0) {
 
             <!-- Header Invoice dengan Status -->
             <div class="card mb-4">
-                <div class="card-header">
+                <div class="card-body">
                     <h5 class="mb-0"><i class="fas fa-file-invoice"></i> <?= $invoice['no_invoice'] ?></h5>
                 </div>
             </div>
@@ -232,7 +232,7 @@ if ($invoice['jumlah_sesi'] > 0) {
                     </div>
 
                     <!-- Histori Sesi Terpakai -->
-                    <div class="card shadow mb-4">
+                    <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-history"></i> Histori Sesi Terpakai
                         </div>
@@ -338,7 +338,7 @@ if ($invoice['jumlah_sesi'] > 0) {
                     </div>
 
                     <!-- Action Buttons -->
-                    <div class="card shadow mb-4">
+                    <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-cog"></i> Aksi
                         </div>
@@ -367,7 +367,7 @@ if ($invoice['jumlah_sesi'] > 0) {
                     </div>
 
                     <!-- Info Tambahan -->
-                    <div class="card shadow">
+                    <div class="card">
                         <div class="card-header bg-light">
                             <i class="fas fa-info-circle"></i> Informasi
                         </div>
