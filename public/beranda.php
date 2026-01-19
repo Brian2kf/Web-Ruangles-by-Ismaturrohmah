@@ -49,7 +49,7 @@ require_once 'template/navbar.php';
                             <i class="fas fa-book-reader fa-3x"></i>
                         </div>
                         <h3 class="fw-bold">Materi Lengkap</h3>
-                        <p class="text-muted mb-0">Akses repository pembelajaran dengan e-book dan video edukatif.</p>
+                        <p class="text-muted mb-0">Akses repository pembelajaran dengan e-book.</p>
                     </div>
                 </div>
             </div>
@@ -72,9 +72,9 @@ require_once 'template/navbar.php';
                 </p>
                 <ul class="list-unstyled">
                     <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Metode belajar interaktif</li>
-                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Jadwal fleksibel</li>
-                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Laporan perkembangan berkala</li>
-                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Harga terjangkau</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Kurikulum Nasional</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Konsultasi PR gratis</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Biaya terjangkau</li>
                 </ul>
                 <a href="#program" class="btn btn-primary mt-3 rounded-pill px-4">Pelajari Lebih Lanjut</a>
             </div>
@@ -97,12 +97,12 @@ require_once 'template/navbar.php';
                             <i class="fas fa-users fa-2x text-primary"></i>
                         </div>
                         <h4 class="card-title fw-bold">Reguler Class</h4>
-                        <p class="card-text text-muted mb-4">Belajar seru bersama teman-teman dengan maksimal 8 murid per kelas.</p>
+                        <p class="card-text text-muted mb-4">Belajar seru bersama teman-teman dengan maksimal 6 murid per kelas.</p>
                         <hr>
                         <ul class="list-unstyled text-start small mb-4 ms-3">
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 8x Pertemuan/Bulan</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Konsultasi PR Harian</li>
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Materi Sekolah & Tambahan</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 90 Menit per Sesi</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 60 Menit per Sesi</li>
                         </ul>
                         <div class="d-grid">
                             <a href="pendaftaran.php" class="btn btn-outline-primary rounded-pill">Daftar Sekarang</a>
@@ -121,12 +121,12 @@ require_once 'template/navbar.php';
                             <i class="fas fa-user-friends fa-2x text-warning"></i>
                         </div>
                         <h4 class="card-title fw-bold">Semi Private</h4>
-                        <p class="card-text text-muted mb-4">Fokus lebih intensif dengan kelompok kecil maksimal 3 murid.</p>
+                        <p class="card-text text-muted mb-4">Fokus lebih intensif dengan kelompok kecil maksimal 2 murid.</p>
                         <hr>
                         <ul class="list-unstyled text-start small mb-4 ms-3">
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 8x Pertemuan/Bulan</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Soft file latihan</li>
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Konsultasi PR Harian</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 90 Menit per Sesi</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 60 Menit per Sesi</li>
                         </ul>
                         <div class="d-grid">
                             <a href="pendaftaran.php" class="btn btn-primary rounded-pill">Daftar Sekarang</a>
@@ -142,12 +142,12 @@ require_once 'template/navbar.php';
                             <i class="fas fa-user fa-2x text-success"></i>
                         </div>
                         <h4 class="card-title fw-bold">Private Class</h4>
-                        <p class="card-text text-muted mb-4">Belajar personal 1 on 1 dengan guru, materi menyesuaikan kebutuhan siswa.</p>
+                        <p class="card-text text-muted mb-4">Belajar personal 1 on 1 dengan pengajar, materi menyesuaikan kebutuhan siswa.</p>
                         <hr>
                         <ul class="list-unstyled text-start small mb-4 ms-3">
                             <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Jadwal Fleksibel</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Guru Datang ke Rumah/Online</li>
-                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 90 Menit per Sesi</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Pengajar Datang ke Rumah/Online</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 60 Menit per Sesi</li>
                         </ul>
                         <div class="d-grid">
                             <a href="pendaftaran.php" class="btn btn-outline-primary rounded-pill">Daftar Sekarang</a>
