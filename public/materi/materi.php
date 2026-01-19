@@ -11,10 +11,11 @@ require_once "../template/navbar.php"; // Pastikan navbar dipanggil
 // Daftar mata pelajaran yang tersedia (Hardcoded sesuai sistem pengajar)
 $mata_pelajaran = [
     'Matematika',
-    'IPA',
+    'IPAS',
     'Bahasa Inggris',
     'Bahasa Indonesia',
-    'Pendidikan Kewarganegaraan'
+    'Pendidikan Kewarganegaraan',
+    'TKA'
 ];
 ?>
 
@@ -38,10 +39,11 @@ $mata_pelajaran = [
                                     // Icon mapping (menggunakan FontAwesome)
                                     $icons = [
                                         'Matematika' => 'fa-calculator',
-                                        'IPA' => 'fa-flask',
+                                        'IPAS' => 'fa-flask',
                                         'Bahasa Inggris' => 'fa-language',
                                         'Bahasa Indonesia' => 'fa-book-open',
-                                        'Pendidikan Kewarganegaraan' => 'fa-landmark'
+                                        'Pendidikan Kewarganegaraan' => 'fa-landmark',
+                                        'TKA' => 'fa-school'
                                     ];
                                     $icon = $icons[$mapel] ?? 'fa-book';
                                     ?>

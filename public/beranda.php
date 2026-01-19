@@ -6,7 +6,7 @@ require_once 'template/navbar.php';
 ?>
 <!-- foto -->
 <header class="d-flex align-items-center justify-content-center text-white text-center" 
-    style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../assets/img/hero-bg.jpg'); background-size: cover; background-position: center; min-height: 650px;">
+    style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../assets/img/....'); background-size: cover; background-position: center; min-height: 650px;">
     
     <div class="container px-4">
         <h1 class="display-3 fw-bold mb-3">Selamat Datang di Ruangles</h1>
@@ -62,7 +62,7 @@ require_once 'template/navbar.php';
         <div class="row align-items-center gx-5">
             <div class="col-lg-6 mb-5 mb-lg-0">
                 <!-- Foto -->
-                <img src="https://dummyimage.com/600x400/ced4da/6c757d" alt="Tentang Ruangles" class="img-fluid rounded-3 shadow">
+                <img src="../assets/img/Kegiatan.png" alt="Tentang Ruangles" class="img-fluid rounded-3 shadow">
             </div>
             <div class="col-lg-6">
                 <h2 class="fw-bold mb-4">Mengapa Memilih Ruangles?</h2>
