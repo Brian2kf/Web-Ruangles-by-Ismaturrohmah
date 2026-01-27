@@ -5,18 +5,55 @@ require_once 'template/header.php';
 require_once 'template/navbar.php';
 ?>
 <!-- foto -->
-<header class="d-flex align-items-center justify-content-center text-white text-center" 
-    style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../assets/img/....'); background-size: cover; background-position: center; min-height: 650px;">
-    
-    <div class="container px-4">
-        <h1 class="display-3 fw-bold mb-3">Selamat Datang di Ruangles</h1>
-        <p class="lead mb-4 fs-4">Bimbingan belajar terbaik untuk mencerdaskan generasi bangsa dengan metode yang menyenangkan.</p>
-        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-            <a class="btn btn-primary btn-lg px-4 gap-3 fw-bold rounded-pill" href="pendaftaran.php">Daftar Sekarang</a>
-            <a class="btn btn-outline-light btn-lg px-4 rounded-pill" href="#program">Lihat Program</a>
+<!-- Carousel Header -->
+<div id="carouselHeader" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="d-flex align-items-center justify-content-center text-white text-center" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../assets/img/Kegiatan1.png'); background-size: cover; background-position: center; min-height: 650px;">
+                <div class="container px-4">
+                    <h1 class="display-3 fw-bold mb-3">Selamat Datang di Ruang les</h1>
+                    <p class="lead mb-4 fs-4">Bimbingan belajar terbaik untuk mencerdaskan generasi bangsa dengan metode yang menyenangkan.</p>
+                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                        <a class="btn btn-primary btn-lg px-4 gap-3 fw-bold rounded-pill" href="pendaftaran.php">Daftar Sekarang</a>
+                        <a class="btn btn-outline-light btn-lg px-4 rounded-pill" href="#program">Lihat Program</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="d-flex align-items-center justify-content-center text-white text-center" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../assets/img/Kegiatan2.png'); background-size: cover; background-position: center; min-height: 650px;">
+                <div class="container px-4">
+                    <h1 class="display-3 fw-bold mb-3">Belajar Menyenangkan & Interaktif</h1>
+                    <p class="lead mb-4 fs-4">Metode belajar inovatif dengan pengajar profesional dan materi lengkap.</p>
+                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                        <a class="btn btn-primary btn-lg px-4 gap-3 fw-bold rounded-pill" href="pendaftaran.php">Daftar Sekarang</a>
+                        <a class="btn btn-outline-light btn-lg px-4 rounded-pill" href="#keunggulan">Keunggulan Kami</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="d-flex align-items-center justify-content-center text-white text-center" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../assets/img/Kegiatan3.png'); background-size: cover; background-position: center; min-height: 650px;">
+                <div class="container px-4">
+                    <h1 class="display-3 fw-bold mb-3">Akses Materi Kapan Saja</h1>
+                    <p class="lead mb-4 fs-4">Dapatkan e-book dan laporan perkembangan belajar secara online.</p>
+                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                        <a class="btn btn-primary btn-lg px-4 gap-3 fw-bold rounded-pill" href="pendaftaran.php">Daftar Sekarang</a>
+                        <a class="btn btn-outline-light btn-lg px-4 rounded-pill" href="#program">Lihat Program</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</header>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselHeader" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselHeader" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
 
 <section class="py-5 bg-light" id="keunggulan">
     <div class="container mt-n5"> <div class="row g-4 justify-content-center">
