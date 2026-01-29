@@ -160,7 +160,7 @@ if (isset($_POST['simpan'])) {
                             <div class="col-md-6 mb-3" id="div_lokasi" style="display: none;">
                                 <label class="form-label fw-bold">Lokasi Les <span class="text-danger">*</span></label>
                                 <select name="lokasi_les" id="lokasi_les" class="form-select" onchange="hitungTarif()">
-                                    <option value="Ruangles">Di Ruangles</option>
+                                    <option value="Ruangles">Di Ruang les</option>
                                     <option value="Rumah">Ke Rumah Murid</option>
                                 </select>
                             </div>

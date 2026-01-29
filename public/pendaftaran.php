@@ -144,6 +144,10 @@ require_once 'template/navbar.php';
                                         <div id="programContainer" class="row mt-3">
                                             <!-- Program akan diisi via JavaScript -->
                                         </div>
+                                        <div class="text-center mt-4">
+                                            <span class="fw-bold">Lihat Daftar Harga Program:</span><br>
+                                            <img src="../assets/img/listh.jpg" alt="List Harga Program" class="img-fluid mt-2" style="max-width: 400px; border:1px solid #ddd; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.07);">
+                                        </div>
                                         
                                         <div class="d-flex justify-content-between mt-4">
                                             <button type="button" class="btn btn-secondary" onclick="showStep(1)">
